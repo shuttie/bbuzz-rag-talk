@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>How [not] to vealuate your RAG</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/dracula.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,8 +16,47 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>HOW NOT TO EVALUATE</h2>
+					<p>todo: image</p>
+					<h1>your RAG</h1>
+					<br><br>
+					<small>Berlin Buzzwords 2025 | Roman Grebennikov</small>
+				</section>
+				<section>
+					<h2>whoami</h2>
+					<p>🔎</p>
+					<ul>
+						<li>PhD in CS, quant trading, credit scoring</li>
+						<li><strong>Findify</strong>: e-commerce search, personalization</li>
+						<li><strong>Delivery Hero</strong>: food search, LLMs</li>
+						<li><strong>Opensource</strong>: Metarank, lightgbm4j, flink-scala-api</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Nixiesearch</h2>
+					<p>TODO: image</p>
+					<ul>
+						<li><strong>TLDR:</strong>Lucene search engine on top of S3</li>
+						<li><strong>Expected:</strong> facets, filters, autocomplete, RFF</li>
+						<li><strong>ML:</strong> embedding inference, cross-encoder ranking</li>
+						<li><strong>RAG:</strong> todo</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Perks of being open-source</h2>
+					<p>img: throw table</p>
+					<ul>
+						<li><strong>they</strong>: hey nice project!</li>
+						<li><strong>you</strong>: thanks!</li>
+						<li><strong>they</strong>: we use it for RAG in a bank with 3M customers</li>
+						<li><strong>they</strong>: and got some issues, can you help?</li>
+						<li><strong>you</strong>: hmm</li>
+					</ul>
+				</section>
+				<section>
+					<h2>The agenda</h2>
+				</section>
 			</div>
 		</div>
 
@@ -31,7 +70,12 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
+				history: true,
+				controls: true,
+				progress: true,
+				width: 1200,
+				transition: 'none',
+				slideNumber: true,
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
