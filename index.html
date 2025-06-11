@@ -1,84 +1,179 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>How [not] to vealuate your RAG</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/dracula.css">
+	<title>How [not] to evaluate your RAG</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<h2>HOW NOT TO EVALUATE</h2>
-					<p>todo: image</p>
-					<h1>your RAG</h1>
-					<br><br>
-					<small>Berlin Buzzwords 2025 | Roman Grebennikov</small>
-				</section>
-				<section>
-					<h2>whoami</h2>
-					<p>🔎</p>
-					<ul>
-						<li>PhD in CS, quant trading, credit scoring</li>
-						<li><strong>Findify</strong>: e-commerce search, personalization</li>
-						<li><strong>Delivery Hero</strong>: food search, LLMs</li>
-						<li><strong>Opensource</strong>: Metarank, lightgbm4j, flink-scala-api</li>
-					</ul>
-				</section>
-				<section>
-					<h2>Nixiesearch</h2>
-					<p>TODO: image</p>
-					<ul>
-						<li><strong>TLDR:</strong> Lucene search engine on top of S3</li>
-						<li><strong>Expected:</strong> facets, filters, autocomplete, RFF</li>
-						<li><strong>ML:</strong> embedding inference, cross-encoder ranking</li>
-						<li><strong>RAG:</strong> todo</li>
-					</ul>
-				</section>
-				<section>
-					<h2>Perks of being open-source</h2>
-					<p>img: throw table</p>
-					<ul>
-						<li><strong>they</strong>: hey nice project!</li>
-						<li><strong>you</strong>: thanks! ❤️</li>
-						<li><strong>they</strong>: we use it for RAG in a bank with 3M customers</li>
-						<li><strong>they</strong>: and got some issues, can you help?</li>
-						<li><strong>you</strong>: hmm 🤔🤔🤔</li>
-					</ul>
-				</section>
-				<section>
-					<h2>The agenda</h2>
-				</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/dracula.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>HOW <s>NOT</s> TO EVALUATE</h2>
+				<img src="img/main.png" height="350px" style="margin: 0px;">
+				<h1>your RAG</h1>
+
+				<small>Berlin Buzzwords 2025 | Roman Grebennikov</small>
+			</section>
+			<section>
+				<h2>whoami</h2>
+				<p><img src="img/ava.jpg" height="200px"></p>
+				<ul>
+					<li>PhD in CS, quant trading, credit scoring</li>
+					<li><strong>Findify</strong>: e-commerce search, personalization</li>
+					<li><strong>Delivery Hero</strong>: food search, LLMs</li>
+					<li><strong>Opensource</strong>: Metarank, lightgbm4j, flink-scala-api</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Nixiesearch</h2>
+				<img src="img/arch.png" height="200px">
+				<ul>
+					<li><strong>TLDR:</strong> Lucene search engine on top of S3</li>
+					<li><strong>Expected:</strong> facets, filters, autocomplete, RFF</li>
+					<li><strong>ML:</strong> embedding inference, cross-encoder ranking</li>
+					<li><strong>RAG:</strong> LLM inference via llamacpp</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Perks of being open-source</h2>
+				<br />
+				<ul>
+					<li class="fragment"><strong>they</strong>: hey nice project!</li>
+					<li class="fragment"><strong>you</strong>: thanks! ❤️</li>
+					<li class="fragment"><strong>they</strong>: we use it for RAG in a bank with 3M customers</li>
+					<li class="fragment"><strong>they</strong>: and got some issues, can you help?</li>
+					<li class="fragment"><strong>you</strong>: hmm 🤔🤔🤔</li>
+				</ul>
+			</section>
+			<section>
+				<h2>The agenda</h2>
+				<img src="img/bitch.png" height="300px">
+				<ul>
+					<li><strong>intro</strong>: RAG as a support agent for support agents</li>
+					<li><strong>data</strong>: chunking and context length</li>
+					<li><strong>search+generation</strong>: the R and G in RAG</li>
+					<li>
+						<strong>tools</strong>: RAGAS, deepeval and why you should build your own
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Support agent for support agents</h2>
+				<p>80% of all questions are covered by FAQ</p>
+				<img src="img/balance.png" height="200px">
+				<ul>
+					<li><strong>40%</strong>: answer immediately as you know the answer</li>
+					<li><strong>40%</strong>: answer after checking FAQ/docs</li>
+					<li><strong>20%</strong>: answer after internal discussion</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Support agent for support agents</h2>
+				<img src="img/bot-idea.png" height="400px">
+				<ul>
+					<li><strong>Still human</strong>: nobody likes chatting with ChatGPT</li>
+					<li><strong>Faster onboarding</strong>: just read the docs</li>
+				</ul>
+			</section>
+			<section>
+				<h2>RAG</h2>
+				<ul>
+					<li>Dialogue: summarize to a query</li>
+					<li>Retrieve: search for top-N relevant docs</li>
+					<li>Summarize: answer the last question in the dialogue</li>
+				</ul>
+				<img src="img/bot-idea.png" height="400px">
+			</section>
+			<section>
+				<h2>Getting real</h2>
+				<img src="img/uzbek.png" height="350px">
+				<ul>
+					<li><strong>FinTech</strong>: airgapped, you can't just use OpenAI API</li>
+					<li><strong>Languages</strong>: CIS region, Uzbek/Kazakh</li>
+					<li><strong>Knowledge base</strong>: what knowledge base?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>wait is RAG solved thing in 2025?</h2>
+				<img src="img/rags.png" height="400px">
+			</section>
+			<section>
+				<h2>Iteration #1</h2>
+				<ul>
+					<li>LLM convert all docs to Markdown</li>
+					<li>LangChain chunk, embed with multilingual-e5-small</li>
+					<li>Qwen2.5 for summarization</li>
+				</ul>
+				<img src="img/ctok.png" height="400px">
+			</section>
+			<section>
+				<h2>CTO@k: it works but sucks</h2>
+				<ul>
+					<li>Relevant docs missing, irrelevant found</li>
+					<li>Wrong query (or summary) generated</li>
+				</ul>
+			</section>
+			<section>
+				<h2>CTO@k: it works but sucks</h2>
+				<ul>
+					<li><strong>R: </strong>Relevant docs missing, irrelevant found</li>
+					<li><strong>G: </strong>Wrong query (or summary) generated</li>
+				</ul>
+			</section>
+			<section>
+				<h2>RAG as a system</h2>
+				<p>preprocessing + retrieval + generation = RAG</p>
+				<img src="img/men.png" height="500px" style="margin: 0px;">
+			</section>
+			<section>
+				<h2>decompose > evaluate > improve</h2>
+			</section>
+			<section>
+				<h2>Corpus preprocessing</h2>
+				<img src="img/incredible.png" height="500px">
+			</section>
+			<section>
+				<h2>Chunking: large vs small</h2>
+				<ul>
+					<li><strong>Large</strong>: embed complete documents</li>
+					<li><strong>Small</strong>: split docs to chunks</li>
+				</ul>
+				<p>Bad UX: "hey this 50-page doc answers your question"</p>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
-				history: true,
-				controls: true,
-				progress: true,
-				width: 1200,
-				transition: 'none',
-				slideNumber: true,
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+			history: true,
+			controls: true,
+			progress: true,
+			width: 1200,
+			transition: 'none',
+			slideNumber: true,
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
 </html>
