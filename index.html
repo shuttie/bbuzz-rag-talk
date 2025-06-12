@@ -132,6 +132,11 @@
 				</ul>
 			</section>
 			<section>
+				<h2>Vibe-evaluating RAG</h2>
+				<img src="img/ragas.png" height="400px">
+				<p>TLDR: evaluate each RAG step separately</p>
+			</section>
+			<section>
 				<h2>RAG as a system</h2>
 				<p>preprocessing + retrieval + generation = RAG</p>
 				<img src="img/men.png" height="500px" style="margin: 0px;">
@@ -144,12 +149,70 @@
 				<img src="img/incredible.png" height="500px">
 			</section>
 			<section>
+				<h2>Corpus preprocessing</h2>
+				<img src="img/incredible.png" height="300px">
+				<ul>
+					<li>Local files: docx, pdf, txt, napkin scans</li>
+					<li>Convert everything to markdown</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Evaluating chunking</h2>
+				<p><img src="img/use_your_product.jpg" height="300px"></p>
+				<ul>
+					<li>chunking = the way you create corpus</li>
+					<li>cannot label changing corpus 🙁</li>
+				</ul>
+				<p>"vibe fixing"</p>
+			</section>
+			<section>
 				<h2>Chunking: large vs small</h2>
 				<ul>
 					<li><strong>Large</strong>: embed complete documents</li>
 					<li><strong>Small</strong>: split docs to chunks</li>
 				</ul>
-				<p>Bad UX: "hey this 50-page doc answers your question"</p>
+			</section>
+			<section>
+				<h2>Problems of large chunking</h2>
+				<img src="img/books.png" height="450px">
+				<p>Bad UX: no time to check, context too large</p>
+			</section>
+			<section>
+				<h2>Problems of small chunking</h2>
+				<img src="img/chunks.png" height="300px">
+				<p>Lost context due to over-chunking</p>
+			</section>
+			<section>
+				<h2>Anthropic's contextual chunking</h2>
+				<img src="img/context.png">
+			</section>
+			<section>
+				<h2>Anthropic's contextual chunking</h2>
+				<img src="img/context.png" height="300px">
+				<ul>
+					<li>LLM inference per chunk is expensive 🙁</li>
+					<li>Yes but we have markdown titles 😃</li>
+				</ul>
+			</section>
+			<section>
+				<h2>GPU poor contextual chunking</h2>
+				<img src="img/context-chunks.png" height="500px">
+			</section>
+			<section>
+				<h2>Chunking TLDR</h2>
+				<p>todo: who would win meme</p>
+				<ul>
+					<li>Chonkie, LangChain: 20+ options, frameworks, SaaS</li>
+					<li><pre><code>
+"text here".split("\n\n")
+					</code></pre></li>
+					<li>Contextual: title + paragraph</li>
+				</ul>
+			</section>
+			<section>
+				<h2>R in RAG</h2>
+				<img src="img/ragas-metrics.png" height="450px">
+				<p>todo: always has been meme</p>
 			</section>
 		</div>
 	</div>
