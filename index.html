@@ -132,6 +132,10 @@
 				</ul>
 			</section>
 			<section>
+				<h2>RAG in a nutshell</h2>
+				<img src="img/rag-nut.png" height="400px">
+			</section>
+			<section>
 				<h2>Vibe-evaluating RAG</h2>
 				<img src="img/ragas.png" height="400px">
 				<p>TLDR: evaluate each RAG step separately</p>
@@ -200,19 +204,166 @@
 			</section>
 			<section>
 				<h2>Chunking TLDR</h2>
-				<p>todo: who would win meme</p>
+				<img src="img/win.png" height="450px">
 				<ul>
-					<li>Chonkie, LangChain: 20+ options, frameworks, SaaS</li>
-					<li><pre><code>
-"text here".split("\n\n")
-					</code></pre></li>
-					<li>Contextual: title + paragraph</li>
+					<li>Contextual: title + 1-2 paragraphs</li>
 				</ul>
 			</section>
 			<section>
 				<h2>R in RAG</h2>
 				<img src="img/ragas-metrics.png" height="450px">
-				<p>todo: always has been meme</p>
+			</section>
+			<section>
+				<h2>R in RAG</h2>
+				<img src="img/search-metrics.png" height="500px">
+			</section>
+			<section>
+				<h2>The most relevant context</h2>
+				<img src="img/rag-nut.png" height="300px">
+				<ul>
+					<li>Context window is limited (but it's growing)</li>
+					<li>Fill the context with relevant chunks</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Which model to choose?</h2>
+				<p>Not all embeddings are OK for non-English!</p>
+				<ul>
+					<li>No labels, no queries, unusual languages</li>
+					<li>No baseline to compare against</li>
+					<li>No public eval corpus 🙁</li>
+				</ul>
+			</section>
+			<section>
+				<h2>MIRACL dataset</h2>
+				<img src="img/miracl.png" height="400px">
+				<ul>
+					<li>TLDR: wikipedia query + docs + labels, 18 languages</li>
+					<li>No Kazakh/Uzbek split, but what if we machine-translate? 🤔</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Machine-translated datasets?</h2>
+				<p>m-MARCO: A Multilingual Version of the MS MARCO [2021]</p>
+				<img src="img/mmarco.png" height="350px">
+				<p>Are MT/LLM models of 2025 better? 🤔</p>
+			</section>
+			<section>
+				<h2>XCOMET, en->xx</h2>
+				<img src="img/xcomet.png" height="400px">
+				<ul>
+					<li>Google Translate: great on high-resource languages</li>
+					<li>GPT4o: strong on low-resource languages</li>
+				</ul>
+			</section>
+			<section>
+				<h2>MTEB eval on MT data</h2>
+				<img src="img/embeds.png">
+				<ul>
+					<li>The bigger = the better on low-resource languages</li>
+					<li>Wait, LLM as an embedding model?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Decoder-only embeddings</h2>
+				<img src="img/decoder.png" height="400px" style="margin: 0px;">
+				<ul>
+					<li>BERT embeddings: bidirectional attention</li>
+					<li>Decoder embeddings: only last token knows it all</li>
+					<li>Decoders: prefill+generation stages</li>
+				</ul>
+			</section>
+			<section>
+				<img src="img/qwen3.png" height="550px">
+			</section>
+			<section>
+				<h2>okey retrieval = quepid time?</h2>
+				<ul>
+					<li><strong>Perfect world</strong>: get queries, label results</li>
+					<li><strong>Reality</strong>: "who's going to label results?"</li>
+				</ul>
+				<p>RAGAS approach: LLM-as-a-judge</p>
+			</section>
+			<section>
+				<h2>Context precision+recall</h2>
+				<img src="img/precision-recall.png" height="500px" style="margin: 0px;">
+				<p>No NDCG: position does not matter for LLM</p>
+			</section>
+			<section>
+				<h2>Context relevance</h2>
+				<img src="img/precision-recall-emb.png" height="550px" style="margin: 0px;">
+			</section>
+			<section>
+				<h2>Context retrieval metrics overview</h2>
+				<ul>
+					<li>Absolute numbers: not much benefit</li>
+					<li>Relative performance: with automated evals!</li>
+				</ul>
+			</section>
+			<section>
+				<h2>G in RAG</h2>
+				<img src="img/rag-nut.png" height="300px">
+				<ul>
+					<li>What open LLM to use?</li>
+					<li>Balance: precision, hardware, latency</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Evaluating generation</h2>
+				<img src="img/rag-diag.png" height="450px" style="margin: 0px;">
+				<ul>
+					<li><strong>Comprehension</strong>: how LLM can understand language?</li>
+					<li><strong>Generation</strong>: how good is generated response?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>FB Belebele benchmark</h2>
+				<img src="img/belebele.png" height="450px" style="margin: 0px;">
+				<ul>
+					<li>122 languages: passage, question, 4 answers</li>
+					<li>400 triplets per language</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Task example</h2>
+				<pre><code>
+Passage:
+The atom can be considered to be one of the fundamental building blocks of 
+all matter. Its a very complex entity which consists, according to a simplified 
+Bohr model, of a central nucleus orbited by electrons, somewhat similar to 
+planets orbiting the sun - see Figure 1.1. The nucleus consists of two 
+particles - neutrons and protons. Protons have a positive electric charge 
+while neutrons have no charge. The electrons have a negative electric charge.
+	
+Query: The particles that orbit the nucleus have which type of charge?
+	
+A: Positive charge
+B: No charge
+C: Negative charge
+D: Positive and negative charge					
+				</code></pre>
+				<ul>
+					<li>TLDR: NLU evaluation, but multilingual</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Results</h2>
+				<img src="img/belebele-results.jpg" style="margin: 0px;">
+				<p>TLDR: Gemma2 (and 3!) is one of the best open LLMs</p>
+			</section>
+			<section>
+				<h2>Benchmarking generation</h2>
+				<img src="img/perplexity.webp">
+				<p><small>[1]: <a
+							href="https://blog.uptrain.ai/decoding-perplexity-and-its-significance-in-llms/">UpTrain:
+							Decoding Perplexity and its significance in LLMs</a></small></p>
+			</section>
+			<section>
+				<h2>Perplexity</h2>
+				<img src="img/perp-results.jpg">
+			</section>
+			<section>
+				<h2></h2>
 			</section>
 		</div>
 	</div>
