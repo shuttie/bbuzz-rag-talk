@@ -210,6 +210,23 @@
 				</ul>
 			</section>
 			<section>
+				<h2>Immutable index</h2>
+				<img src="img/s3-index.png" height="250px" style="margin:0px;">
+				<pre><code data-trim data-noescape class="language-bash">
+$> nixiesearch index file -c config.yml --url s3://bucket/source --index hello
+
+$> aws s3 ls s3://bucket/index/hello
+-rw-r--r-- 1 shutty shutty       512 May 22 12:55 _0.cfe
+-rw-r--r-- 1 shutty shutty 123547444 May 22 12:55 _0.cfs
+-rw-r--r-- 1 shutty shutty       322 May 22 12:55 _0.si
+-rw-r--r-- 1 shutty shutty      1610 May 22 12:55 index.json
+-rw-r--r-- 1 shutty shutty       160 May 22 12:55 segments_1
+-rw-r--r-- 1 shutty shutty         0 May 22 12:48 write.lock
+
+$> nixiesearch search -c config.yml
+				</code></pre>
+			</section>
+			<section>
 				<h2>R in RAG</h2>
 				<img src="img/ragas-metrics.png" height="450px">
 			</section>
@@ -275,6 +292,47 @@
 			</section>
 			<section>
 				<img src="img/qwen3.png" height="550px">
+			</section>
+			<section>
+				<h2>LLM embeddings and ONNX</h2>
+				<pre><code class="language-python">
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer("Qwen/Qwen3-Embedding-8B", backend="onnx")
+
+# raw export
+model.save_pretrained("export_dir")
+
+# optimization - DOES NOT WORK
+export_optimized_onnx_model(model, "O3", "export_dir")
+
+# QInt8 quantization
+export_dynamic_quantized_onnx_model(model, "avx512_vnni", "export_dir")
+				</code></pre>
+			</section>
+			<section>
+				<h2>ONNX + Nixiesearch</h2>
+				<pre><code data-trim data-noescape class="language-yaml" style="max-height: fit-content;">
+inference:
+  embedding:
+    # our embedding model
+    bge-gemma:
+      provider: onnx
+      model: file://dir/model_qint8.onnx
+
+schema:
+  # index schema
+  knowledgebase:
+    fields:
+      content:
+        type: text
+        search:
+          semantic:
+            model: bge-gemma
+</code></pre>
+				<ul>
+					<li>just worked, CLS pooling, even qint8 quantization</li>
+				</ul>
 			</section>
 			<section>
 				<h2>okey retrieval = quepid time?</h2>
@@ -360,10 +418,112 @@ D: Positive and negative charge
 			</section>
 			<section>
 				<h2>Perplexity</h2>
-				<img src="img/perp-results.jpg">
+				<img src="img/perp-results.jpg" style="margin: 0px;">
+				<ul>
+					<li>Gemma2-27B: balance of comprehension+generation</li>
+					<li>Later upgrade to Gemma3-27B</li>
+				</ul>
 			</section>
 			<section>
-				<h2></h2>
+				<h2>Uncharted territory</h2>
+				<p>LLM-as-a-judge 🤔🤔🤔 metrics which do exist, but never tried:</p>
+				<ul>
+					<li><strong>Answer accuracy</strong>: compare prediction and ground truth</li>
+					<li><strong>Answer groundness</strong>: is answer based on context?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>RAGAS: answer accuracy</h2>
+				<img src="img/accuracy.png" height="550px">
+			</section>
+			<section>
+				<h2>RAGAS: answer groundness</h2>
+				<img src="img/ground.png" height="550px">
+			</section>
+			<section>
+				<img src="img/ragas-metrics2.png">
+			</section>
+			<section>
+				<h2>RAGAS vs client.completion</h2>
+				<ul>
+					<li>ended up with custom prompt collection</li>
+					<li>
+						bad prompt example:
+						<pre><code>
+is document '{doc}' relevant to query '{query}'?
+						</code></pre>
+					</li>
+					<li>
+						good prompt example:
+						<pre><code>
+classify '{doc}' relevance to query '{query}':                    
+score 0: doc has different topic and don't answer 
+         the question asked in the query.
+score 1: doc has the same or similar topic, but don't 
+         answer the the query.
+score 2: document exactly answers the question in query
+						</code></pre>
+
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Implementation</h2>
+				<img src="img/click.png">
+				<ul>
+					<li>on-prem: 1-2x GPU, 4U server</li>
+					<li>perf: 100 tps, 500ms time to first token</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Nixiesearch, llamacpp, GGUF</h2>
+				<pre><code data-trim data-noescape class="language-yaml" style="max-height: fit-content;">
+inference:
+  completion:
+    # LLM inference here!
+    gemma2-27b:
+	    provider: llamacpp
+	    model: file://dir/model_Q4_K_0.GGUF
+  embedding:
+    bge-gemma:
+      provider: onnx
+      model: file://dir/model_qint8.onnx
+
+schema:
+  knowledgebase:
+    fields:
+      content:
+        type: text
+        search:
+          semantic:
+            model: bge-gemma
+</code></pre>
+			</section>
+			<section>
+				<h2>Things we learned</h2>
+				<ul>
+					<li>English >> High-resource >> Low-resource languages</li>
+					<li><strong>Decompose</strong>: complex system = many simple parts</li>
+					<li><strong>LLM-as-a-judge</strong>: when you have no choice</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Links</h2>
+				<img src="img/rickroll.png" height="300px">
+				<small>
+					<ul>
+						<li><strong>RAGAS</strong>: <a href="https://www.ragas.io/">https://www.ragas.io/</a></li>
+						<li><strong>Contextual Chunking</strong>: <a
+								href="https://www.anthropic.com/news/contextual-retrieval">https://www.anthropic.com/news/contextual-retrieval</a>
+						</li>
+						<li><strong>FB Belebele benchmark</strong>: <a
+								href="https://huggingface.co/datasets/facebook/belebele">https://huggingface.co/datasets/facebook/belebele</a>
+						</li>
+						<li><strong>Nixiesearch</strong>: <a
+								href="https://github.com/nixiesearch/nixiesearch">https://github.com/nixiesearch/nixiesearch</a>
+						</li>
+					</ul>
+				</small>
 			</section>
 		</div>
 	</div>
