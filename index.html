@@ -40,7 +40,7 @@
 				<img src="img/arch.png" height="200px">
 				<ul>
 					<li><strong>TLDR:</strong> Lucene search engine on top of S3</li>
-					<li><strong>Expected:</strong> facets, filters, autocomplete, RFF</li>
+					<li><strong>Expected:</strong> facets, filters, autocomplete, RRF</li>
 					<li><strong>ML:</strong> embedding inference, cross-encoder ranking</li>
 					<li><strong>RAG:</strong> LLM inference via llamacpp</li>
 				</ul>
@@ -60,19 +60,19 @@
 				<h2>The agenda</h2>
 				<img src="img/bitch.png" height="300px">
 				<ul>
-					<li><strong>intro</strong>: RAG as a support agent for support agents</li>
-					<li><strong>data</strong>: chunking and context length</li>
-					<li><strong>search+generation</strong>: the R and G in RAG</li>
-					<li>
-						<strong>tools</strong>: RAGAS, deepeval and why you should build your own
+					<li class="fragment"><strong>intro</strong>: RAG as a support agent for support agents</li>
+					<li class="fragment"><strong>data</strong>: chunking and context length</li>
+					<li class="fragment"><strong>search+generation</strong>: the R and G in RAG</li>
+					<li class="fragment">
+						<strong>tools</strong>: RAGAS, and why you should perhaps build your own
 					</li>
 				</ul>
 			</section>
 			<section>
 				<h2>Support agent for support agents</h2>
-				<p>80% of all questions are covered by FAQ</p>
-				<img src="img/balance.png" height="200px">
-				<ul>
+				<p class="fragment">80% of all questions are covered by FAQ</p>
+				<img src="img/balance.png" height="200px" class="fragment">
+				<ul class="fragment">
 					<li><strong>40%</strong>: answer immediately as you know the answer</li>
 					<li><strong>40%</strong>: answer after checking FAQ/docs</li>
 					<li><strong>20%</strong>: answer after internal discussion</li>
@@ -89,9 +89,9 @@
 			<section>
 				<h2>RAG</h2>
 				<ul>
-					<li>Dialogue: summarize to a query</li>
-					<li>Retrieve: search for top-N relevant docs</li>
-					<li>Summarize: answer the last question in the dialogue</li>
+					<li><strong>Dialogue</strong>: summarize to a query</li>
+					<li><strong>Retrieve</strong>: search for top-N relevant docs</li>
+					<li><strong>Summarize</strong>: answer the last question in the dialogue</li>
 				</ul>
 				<img src="img/bot-idea.png" height="400px">
 			</section>
@@ -99,14 +99,17 @@
 				<h2>Getting real</h2>
 				<img src="img/uzbek.png" height="350px">
 				<ul>
-					<li><strong>FinTech</strong>: airgapped, you can't just use OpenAI API</li>
-					<li><strong>Languages</strong>: CIS region, Uzbek/Kazakh</li>
-					<li><strong>Knowledge base</strong>: what knowledge base?</li>
+					<li class="fragment"><strong>FinTech</strong>: airgapped, you can't just use OpenAI API</li>
+					<li class="fragment"><strong>Languages</strong>: CIS region, Uzbek/Kazakh</li>
+					<li class="fragment"><strong>Knowledge base</strong>: what knowledge base?</li>
 				</ul>
 			</section>
 			<section>
 				<h2>wait is RAG solved thing in 2025?</h2>
 				<img src="img/rags.png" height="400px">
+			</section>
+			<section>
+				<video data-autoplay src="video/catrag2.mp4"></video>
 			</section>
 			<section>
 				<h2>Iteration #1</h2>
@@ -115,7 +118,7 @@
 					<li>LangChain chunk, embed with multilingual-e5-small</li>
 					<li>Qwen2.5 for summarization</li>
 				</ul>
-				<img src="img/ctok.png" height="400px">
+				<img src="img/ctok.png" height="400px" class="fragment">
 			</section>
 			<section>
 				<h2>CTO@k: it works but sucks</h2>
@@ -131,19 +134,19 @@
 					<li><strong>G: </strong>Wrong query (or summary) generated</li>
 				</ul>
 			</section>
-			<section>
+			<!--section>
 				<h2>RAG in a nutshell</h2>
 				<img src="img/rag-nut.png" height="400px">
+			</section-->
+			<section>
+				<h2>RAG as a system</h2>
+				<p>preprocessing + retrieval + generation = RAG</p>
+				<img src="img/men.png" height="500px" style="margin: 0px;" class="fragment">
 			</section>
 			<section>
 				<h2>Vibe-evaluating RAG</h2>
 				<img src="img/ragas.png" height="400px">
 				<p>TLDR: evaluate each RAG step separately</p>
-			</section>
-			<section>
-				<h2>RAG as a system</h2>
-				<p>preprocessing + retrieval + generation = RAG</p>
-				<img src="img/men.png" height="500px" style="margin: 0px;">
 			</section>
 			<section>
 				<h2>decompose > evaluate > improve</h2>
@@ -162,7 +165,7 @@
 			</section>
 			<section>
 				<h2>Evaluating chunking</h2>
-				<p><img src="img/use_your_product.jpg" height="300px"></p>
+				<p><img src="img/use_your_product.jpg" height="350px" style="margin: 0px;"></p>
 				<ul>
 					<li>chunking = the way you create corpus</li>
 					<li>cannot label changing corpus 🙁</li>
